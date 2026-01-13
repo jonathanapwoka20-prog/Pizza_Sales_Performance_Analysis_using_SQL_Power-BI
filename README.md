@@ -87,11 +87,80 @@ Key fields include:
 
 ## Methodology
 
-1. Data cleaning and transformation using Power Query (M Language)
-2. Date feature engineering (day, month, quarter) executed both in SQL & Power Query Editor in Power Bi
-4. Metric calculation using DAX in Power BI
-5. SQL validation and aggregation using Microsoft SQL Server
-6. Visualization and insight generation in Power BI
+1. **Data cleaning and transformation using Power Query (M Language)**
+2. **Date feature engineering (day, month, quarter) executed both in SQL & Power Query Editor in Power Bi for analysis**
+4. **Metric calculation using DAX in Power BI**
+5. **SQL validation and aggregation using Microsoft SQL Server**
+   - Daily Trend for total orders to show how many orders are being placed on daily basis
+    ```sql
+    SELECT DATENAME(DW, order_date) AS 'Day of Week', 
+           COUNT(DISTINCT order_id) AS 'Total Daily Orders'
+    FROM pizza_sales 
+           GROUP BY DATENAME(DW, order_date)
+           ORDER BY COUNT(DISTINCT order_id) DESC;
+    ```
+   - Monthly trend for total orders illustrating hourly trend of total orders throughout the day
+    ```sql
+     SELECT DATENAME(MONTH, order_date) AS 'Month', 
+            COUNT(DISTINCT order_id) AS 'Total Monthly Orders'
+     FROM pizza_sales
+            GROUP BY DATENAME(MONTH, order_date)
+            ORDER BY COUNT(DISTINCT order_id) DESC;
+    ```
+   - The percentage of sales by pizza category
+    ```sql
+     SELECT pizza_category, 
+            CAST(((SUM(total_price) * 100) / (SELECT SUM(total_price) FROM pizza_sales)) AS DECIMAL(8, 2)) AS '% of Sales'
+     FROM pizza_sales
+            GROUP BY pizza_category
+            ORDER BY '% of Sales' DESC;
+    ```
+   - The percentage of sales by pizza size
+   ```sql
+     SELECT pizza_size, CAST(((SUM(total_price) * 100) / (SELECT SUM(total_price) FROM pizza_sales)) AS DECIMAL(8, 2)) AS '% of Sales'
+     FROM pizza_sales
+          GROUP BY pizza_size
+          ORDER BY '% of Sales' DESC;
+   ```
+   - The total pizzas sold per pizza category
+    ```sql
+     SELECT pizza_category, 
+            SUM(quantity) AS 'Total Pizzas Sold'
+     FROM pizza_sales
+            GROUP BY pizza_category
+            ORDER BY 'Total Pizzas Sold' DESC;
+    ```
+   - Top 5 best sellers by Revenue, total quantity, total orders
+    ```sql
+     SELECT TOP 5 pizza_name, 
+           SUM(total_price) AS 'Top 5 in Revenue', 
+           SUM(quantity) AS 'Top 5 in quantity', 
+           COUNT(DISTINCT order_id) AS 'Top 5 Orders'
+     FROM pizza_sales
+           GROUP BY pizza_name 
+           ORDER BY SUM(total_price) DESC, SUM(quantity) DESC, COUNT(DISTINCT order_id) DESC;
+    ```
+   - Bottom 5 sellers by Revenue
+    ```sql
+     SELECT TOP 5 pizza_name, 
+           SUM(total_price) AS 'Bottom 5 in Revenue'
+     FROM pizza_sales
+           GROUP BY pizza_name 
+           ORDER BY SUM(total_price) ASC;
+    ```
+   - Bottom 5 sellers by total quantity
+    ```sql
+     SELECT TOP 5 pizza_name, 
+          SUM(quantity) AS 'Bottom 5 in quantity' 
+     FROM pizza_sales
+          GROUP BY pizza_name 
+          ORDER BY SUM(quantity) ASC;
+
+7. **Visualization and insight generation in Power BI**
+   <img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/acfaf4e2-9e77-4e06-ba79-cfea3885de65" />
+   <img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/04d26c31-627d-4add-bc92-4e45e245ca84" />
+
+
 
 ---
 
@@ -117,7 +186,7 @@ Key fields include:
 ## Tools & Skills
 
 - Power BI (DAX, Data Modeling, Dashboards)
-- SQL Server (Aggregations, Ranking, Validation)
+- MS SQL Server (Aggregations, Ranking, Validation)
 - Power Query (M Language)
 - Business KPI Design
 - Data Visualization & Insight Communication
@@ -136,182 +205,3 @@ Next Steps:
 - Customer segmentation analysis
 
 ---
-
-========================================
-FILE: .gitignore
-========================================
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Power BI temp files
-*.pbix~
-*.pbit~
-
-# Python (if extended later)
-__pycache__/
-*.pyc
-
-# Excel temp files
-~$*.xlsx
-
-========================================
-FILE: sql/pizza_sales_analysis.sql
-========================================
-
--- Total Revenue
-SELECT 
-    SUM(total_price) AS total_revenue
-FROM pizza_sales;
-
--- Total Orders
-SELECT 
-    COUNT(DISTINCT order_id) AS total_orders
-FROM pizza_sales;
-
--- Total Pizzas Sold
-SELECT 
-    SUM(quantity) AS total_pizzas_sold
-FROM pizza_sales;
-
--- Average Order Value
-SELECT 
-    SUM(total_price) / COUNT(DISTINCT order_id) AS average_order_value
-FROM pizza_sales;
-
--- Average Pizzas Per Order
-SELECT 
-    SUM(quantity) / COUNT(DISTINCT order_id) AS avg_pizzas_per_order
-FROM pizza_sales;
-
--- Daily Trend for Total Orders
-SELECT 
-    CAST(order_date AS DATE) AS order_day,
-    COUNT(DISTINCT order_id) AS total_orders
-FROM pizza_sales
-GROUP BY CAST(order_date AS DATE)
-ORDER BY order_day;
-
--- Monthly Trend for Total Orders
-SELECT 
-    DATENAME(MONTH, order_date) AS month_name,
-    MONTH(order_date) AS month_number,
-    COUNT(DISTINCT order_id) AS total_orders
-FROM pizza_sales
-GROUP BY DATENAME(MONTH, order_date), MONTH(order_date)
-ORDER BY month_number;
-
--- Sales by Pizza Category
-SELECT 
-    pizza_category,
-    SUM(total_price) AS revenue
-FROM pizza_sales
-GROUP BY pizza_category
-ORDER BY revenue DESC;
-
--- Sales by Pizza Size
-SELECT 
-    pizza_size,
-    SUM(total_price) AS revenue
-FROM pizza_sales
-GROUP BY pizza_size
-ORDER BY revenue DESC;
-
--- Top 5 Best Sellers by Revenue
-SELECT TOP 5
-    pizza_name,
-    SUM(total_price) AS revenue
-FROM pizza_sales
-GROUP BY pizza_name
-ORDER BY revenue DESC;
-
--- Bottom 5 Worst Sellers by Revenue
-SELECT TOP 5
-    pizza_name,
-    SUM(total_price) AS revenue
-FROM pizza_sales
-GROUP BY pizza_name
-ORDER BY revenue ASC;
-
-========================================
-FILE: powerbi/dax_measures.md
-========================================
-
-# Power BI DAX Measures
-
-Total Revenue =
-SUM(pizza_sales[total_price])
-
-Total Orders =
-DISTINCTCOUNT(pizza_sales[order_id])
-
-Total Pizzas Sold =
-SUM(pizza_sales[quantity])
-
-Average Order Value =
-[Total Revenue] / [Total Orders]
-
-Average Pizzas Per Order =
-[Total Pizzas Sold] / [Total Orders]
-
-========================================
-FILE: powerbi/power_query_m_language.txt
-========================================
-
-let
-    Source = Csv.Document(
-        File.Contents("pizza_sales.csv"),
-        [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.None]
-    ),
-    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-    ChangedTypes = Table.TransformColumnTypes(
-        PromotedHeaders,
-        {
-            {"order_date", type date},
-            {"order_time", type time},
-            {"quantity", Int64.Type},
-            {"unit_price", type number},
-            {"total_price", type number}
-        }
-    ),
-    AddedDayNumber = Table.AddColumn(
-        ChangedTypes,
-        "Day Number",
-        each Date.Day([order_date]),
-        Int64.Type
-    ),
-    AddedMonthName = Table.AddColumn(
-        AddedDayNumber,
-        "Month Name",
-        each Date.MonthName([order_date]),
-        type text
-    ),
-    AddedMonthNumber = Table.AddColumn(
-        AddedMonthName,
-        "Month Number",
-        each Date.Month([order_date]),
-        Int64.Type
-    ),
-    AddedYearQuarter = Table.AddColumn(
-        AddedMonthNumber,
-        "Year Quarter",
-        each "Q" & Text.From(Date.QuarterOfYear([order_date])) & "-" & Text.From(Date.Year([order_date])),
-        type text
-    )
-in
-    AddedYearQuarter
-
-========================================
-FILE: data/data_notes.md
-========================================
-
-- Dataset is transactional at order-item level
-- Multiple rows may exist per order_id
-- Revenue calculated as quantity * unit_price
-- No missing values observed in critical fields
-- Dataset suitable for aggregation-based analysis and BI reporting
-
-========================================
-END OF PROJECT
-========================================

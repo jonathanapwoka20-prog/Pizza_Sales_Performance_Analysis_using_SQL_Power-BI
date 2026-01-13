@@ -34,20 +34,64 @@ Key fields include:
 ## Key KPIs
 
 - Total Revenue
+  - In SQL
+  ```sql
+  SELECT SUM(total_price) AS 'Total Revenue'
+  FROM pizza_sales;
+  ```
+  - In Power Bi DAX
+    ```powerbi
+    Total Revenue = SUM(pizza_sales[total_price])
+  
 - Total Orders
+  - In SQL
+   ```sql
+   SELECT COUNT(DISTINCT order_id) AS 'Total Orders Placed'
+  FROM pizza_sales;
+  ```
+  - In Power Bi DAX
+    ```powerbi
+    Total Orders = DISTINCTCOUNT(pizza_sales[order_id])    
 - Total Pizzas Sold
+  - In SQL
+    ```sql
+    SELECT SUM(quantity) AS 'Total Pizzas Sold'
+    FROM pizza_sales;
+    ```
+  - In Power Bi DAX
+    ```powerbi
+    Total Pizzas Sold = SUM(pizza_sales[quantity])
+
 - Average Order Value (AOV)
+  - In SQL
+    ```sql
+    SELECT SUM(total_price) / COUNT(DISTINCT order_id) AS 'Average Order Value'
+    FROM pizza_sales;
+    ```
+  - In Power Bi DAX
+    ```powerbi
+    Average Order Value = [Total Revenue] / [Total Orders]
+
 - Average Pizzas per Order
+   - In SQL
+     ```sql
+     SELECT CAST(CAST(SUM(quantity) AS DECIMAL(8, 2)) / 
+       CAST(COUNT(DISTINCT order_id) AS DECIMAL(8, 2)) AS DECIMAL(8, 2)) AS 'Average Pizzas per Order'
+     FROM pizza_sales;
+     ```
+   - In Power Bi DAX
+     ```powerbi
+     Average Pizzas Per Order = [Total Pizzas Sold] / [Total Orders]
 
 ---
 
 ## Methodology
 
 1. Data cleaning and transformation using Power Query (M Language)
-2. Date feature engineering (day, month, quarter)
-3. Metric calculation using DAX in Power BI
-4. SQL validation and aggregation using Microsoft SQL Server
-5. Visualization and insight generation in Power BI
+2. Date feature engineering (day, month, quarter) executed both in SQL & Power Query Editor in Power Bi
+4. Metric calculation using DAX in Power BI
+5. SQL validation and aggregation using Microsoft SQL Server
+6. Visualization and insight generation in Power BI
 
 ---
 

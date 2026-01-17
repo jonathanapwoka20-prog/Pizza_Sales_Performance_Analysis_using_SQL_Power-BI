@@ -158,19 +158,23 @@ Key fields include:
 
 7. **Visualization and insight generation in Power BI**
    <img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/acfaf4e2-9e77-4e06-ba79-cfea3885de65" />
+   
    <img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/04d26c31-627d-4add-bc92-4e45e245ca84" />
 
 
 
 ---
 
-## Key Insights
+## Key Outcomes & Business Insights
 
-- Sales show clear daily and monthly seasonality patterns
-- A small group of pizzas contributes a disproportionate share of revenue
-- Classic and Supreme categories dominate total sales
-- Medium and Large pizzas generate the highest revenue share
-- Several menu items consistently underperform across all metrics
+The final dashboard provided concrete, actionable insights that a management team could use to optimize operations:​
+
+- **Peak Demand & Staffing:** The analysis revealed ***Friday 3,538*** total daily orders) and ***Saturday 3,158*** total daily orders) as the highest-volume days. This insight allows for optimized weekend staffing and resource allocation
+
+- **Product Strategy:**
+  - **High Performers:** The ***Thai Chicken Pizza*** was the highest revenue earner ***$43,434,*** while ***The Classic Deluxe Pizza*** led in total quantity sold ***2,453***.
+  - **Menu Review:** The ***Brie Carre Pizza*** was identified as the clear bottom performer across Revenue ***$11,588*** and ***Quantity 490***, flagging it for potential removal or targeted marketing.
+- **Sales Distribution:** ***Large (L)*** pizzas accounted for the largest percentage of sales ***45.89%***, confirming customer preference for larger sizes.
 
 ---
 

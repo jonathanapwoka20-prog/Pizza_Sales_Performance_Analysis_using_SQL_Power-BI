@@ -165,25 +165,26 @@ Key fields include:
 
 ---
 
+---
+
 ## Key Outcomes & Business Insights
 
-The final dashboard provided concrete, actionable insights that a management team could use to optimize operations:​
-
-- **Peak Demand & Staffing:** The analysis revealed ***Friday 3,538*** total daily orders) and ***Saturday 3,158*** total daily orders) as the highest-volume days. This insight allows for optimized weekend staffing and resource allocation
-
-- **Product Strategy:**
-  - **High Performers:** The ***Thai Chicken Pizza*** was the highest revenue earner ***$43,434,*** while ***The Classic Deluxe Pizza*** led in total quantity sold ***2,453***.
-  - **Menu Review:** The ***Brie Carre Pizza*** was identified as the clear bottom performer across Revenue ***$11,588*** and ***Quantity 490***, flagging it for potential removal or targeted marketing.
-- **Sales Distribution:** ***Large (L)*** pizzas accounted for the largest percentage of sales ***45.89%***, confirming customer preference for larger sizes.
+* **Operational Optimization (Peak Demand):** Identified **Friday (3,538 orders)** and **Saturday (3,158 orders)** as the highest-volume periods. This data-driven insight enables management to optimize weekend staffing levels and inventory preparation to reduce wait times and service bottlenecks.
+* **Product Performance Matrix:**
+    * **Revenue Leader:** The **Thai Chicken Pizza** emerged as the top revenue contributor, generating **$43,434.25**.
+    * **Volume Leader:** The **Classic Deluxe Pizza** achieved the highest sales velocity with **2,453 units sold**.
+* **Menu Rationalization:** The **Brie Carre Pizza** was flagged as the primary underperformer, ranking lowest in both **Revenue ($11,588)** and **Quantity (490 units)**. This provides a clear empirical basis for menu removal or recipe redesign.
+* **Customer Preference Trends:** Analysis of order sizes revealed that **Large (L) pizzas** dominate the market share at **45.89%**, indicating a strong consumer preference for value-sized options.
+* **Transaction Health:** Established a baseline **Average Order Value (AOV) of $38.31**, providing a critical benchmark for future upselling and cross-selling initiatives.
 
 ---
 
-## Business Recommendations
+## Strategic Business Recommendations
 
-- Optimize staffing and inventory around peak demand periods
-- Focus promotions on top-performing categories and sizes
-- Re-evaluate or redesign underperforming pizzas
-- Introduce bundled offers to increase average pizzas per order
+* **Dynamic Resource Allocation:** Implement a "Demand-Based" staffing model that increases floor and kitchen personnel during identified Friday/Saturday peak surges to maintain service quality.
+* **Targeted Upselling:** Design "Bundle Deals" focused on the high-volume **Large (L)** size category to further increase the Average Order Value.
+* **Menu Lifecycle Management:** Replace the **Brie Carre Pizza** with a new seasonal offering or a variant of the high-performing **Thai Chicken** to maximize revenue per menu slot.
+* **Promotion Alignment:** Shift marketing spend toward **Fridays and Saturdays** to capitalize on existing high-intent traffic, and consider "Slow-Day" promotions (e.g., Tuesdays) to smooth out weekly revenue volatility.
 
 ---
 
